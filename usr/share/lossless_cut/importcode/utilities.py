@@ -1246,7 +1246,6 @@ Cut list:
     Keyframe adjusted:  (%(keyframe_cuts)s)
 
 Recording device:
-    Name:                   "%(recorder_displayname)s"
     Card type:              "%(recorders_cardtype)s"
     Default Input:          "%(recorders_defaultinput)s"
     Video Device:           "%(recorders_videodevice)s"

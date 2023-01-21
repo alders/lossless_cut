@@ -389,8 +389,9 @@ file "%s", aborting script.''') % self.configuration['base_name']
                         self.metadata['description']
                 self.configuration['season_num'] = \
                         self.metadata['season']
-                self.configuration['episode_num'] = \
-                        self.metadata['episode']
+                if self.metadata['episode']:
+                  self.configuration['episode_num'] = \
+                          self.metadata['episode']
         elif not self.recorded_program.category_type == 'series':
             self._get_movie_metadata(
                     title=self.configuration['title'],
@@ -622,6 +623,7 @@ Error: %s''') % (self.configuration['mythutil'], result[1])
             try:
                 fps = [mark.data for mark in self.recorded.markup
                                 if mark.type == 32][0]
+                fps = 25000
                 if fps == None:
                     raise IndexError
             except IndexError:
@@ -1266,7 +1268,8 @@ Your installed version has been detected as "%s", aborting script.''') % \
         return nothing
         '''
         #
-        self.configuration['recorder_displayname'] = "Unknown"
+        # The cardinput table is no longer used as of 0.28, therefore displayname has no meaning
+        #self.configuration['recorder_displayname'] = "Unknown"
         self.configuration['recorders_cardtype'] = "Unknown"
         self.configuration['recorders_defaultinput'] = "Unknown"
         self.configuration['recorders_videodevice'] = "Unknown"
@@ -1285,16 +1288,19 @@ _(u'''There is no channel record for chanid "%d", skipping getting recorder deta
                 self.recorded.chanid))
             return
         #
-        sql_cmd = common.SQL_GET_CARDINFO % channel[0][0]
-        cursor.execute(sql_cmd)
-        cardinfo = cursor.fetchall()
-        if not len(cardinfo) > 0:
-            self.logger.info(
-_(u'''There is no cardinfo record for sourceid "%d", skipping getting recorder details.''' %
-                    channel[0][0]))
-            return
+        # The cardinput table is no longer used as of 0.28
+        #sql_cmd = common.SQL_GET_CARDINFO % channel[0][0]
+        #cursor.execute(sql_cmd)
+        #cardinfo = cursor.fetchall()
+        #if not len(cardinfo) > 0:
+        #    self.logger.info(
+        #_(u'''There is no cardinfo record for sourceid "%d", skipping getting recorder details.''' %
+        #            channel[0][0]))
+        #    return
         #
-        sql_cmd = common.SQL_GET_CARDID % cardinfo[0][0]
+        #sql_cmd = common.SQL_GET_CARDID % cardinfo[0][0]
+        # use status value of '4' for the CARDID: meaning 4 capture cards I think...
+        sql_cmd = common.SQL_GET_CARDID % 4
         cursor.execute(sql_cmd)
         capturecard = cursor.fetchall()
         if not len(capturecard) > 0:
@@ -1303,7 +1309,8 @@ _(u'''There is no capturecard record for cardid "%d", skipping getting recorder 
                     cardinfo[0][0]))
             return
         #
-        self.configuration['recorder_displayname'] = cardinfo[0][1]
+        # The cardinput table is no longer used as of 0.28, therefore displayname has no meaning
+        #self.configuration['recorder_displayname'] = cardinfo[0][1]
         self.configuration['recorders_cardtype'] = capturecard[0][0]
         self.configuration['recorders_defaultinput'] = capturecard[0][1]
         self.configuration['recorders_videodevice'] = capturecard[0][2]
@@ -1464,9 +1471,9 @@ Copying "%s"''') % self.configuration['mkv_file']
                     + _(u" to myth://Videos@%s/%s") %
                     (self.vid.host, self.vid.filename))
         self.logger.info(verbage)
-        self.stdout.write(verbage + u'\n\n')
+        # self.stdout.write(verbage + u'\n\n')
         #
-        srcfp = open(self.configuration['mkv_file'], 'r')
+        srcfp = open(self.configuration['mkv_file'],'rb')
         dstfp = self.vid.open('w')
         #
         tsize = 2**24

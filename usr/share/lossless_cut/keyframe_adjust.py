@@ -60,7 +60,7 @@ VERSION = ''
 for digit in etree.LIBXML_VERSION:
     VERSION += str(digit)+'.'
 VERSION = VERSION[:-1]
-if VERSION < '2.7.2':
+if common.compareVersion('2.7.2',VERSION):
     sys.stderr.write(u'''
 Error: The installed version of the "lxml" python library "libxml" version
        is too old. At least "libxml" version 2.7.2 must be installed.

@@ -105,6 +105,7 @@ from copy import deepcopy
 
 ## Mythtv loss less cut specific imports
 import importcode.common as common
+from importcode.common import compareVersion
 from importcode.utilities import create_cachedir, \
         set_language, get_config, exec_commandline, \
         check_dependancies, create_logger, commandline_call, \
@@ -132,7 +133,7 @@ VERSION = ''
 for digit in etree.LIBXML_VERSION:
     VERSION += str(digit)+'.'
 VERSION = VERSION[:-1]
-if VERSION < '2.7.2':
+if common.compareVersion('2.7.2',VERSION):
     sys.stderr.write(u'''
 Error: The installed version of the "lxml" python library "libxml" version
        is too old. At least "libxml" version 2.7.2 must be installed.
@@ -630,11 +631,11 @@ Recorded file:
         if OPTS.replace_recorded:
             title = self.configuration['video_title']
             print (title)
-            send_mythnotify("warning", title + " " + self.configuration['subtitle'], "Rozpoczeto konwersje do MKV")
+            send_mythnotify("warning", title + " " + self.configuration['subtitle'], "Conversion to MKV started")
         elif OPTS.mythvideo_export:
-            send_mythnotify("warning", self.configuration['video_title'] + " " + self.configuration['subtitle'], "Rozpoczeto eksport do MKV")
+            send_mythnotify("warning", self.configuration['video_title'] + " " + self.configuration['subtitle'], "Export started to MKV")
         elif OPTS.movepath:
-            send_mythnotify("warning", self.configuration['video_title'] + " " + self.configuration['subtitle'], u'Rozpoczeto przenoszenie do MKV')
+            send_mythnotify("warning", self.configuration['video_title'] + " " + self.configuration['subtitle'], u'Transfer started to MKV')
 
         title = self.configuration['video_title']
         subtitle = self.configuration['subtitle']
@@ -1310,7 +1311,7 @@ u' --title "%(mkv_title)s" --attachment-description "%(mkv_description)s"' % \
                 arguments = u'%s%s%s' % (merge_common, merge_one_segment,
                                             merge_metadata)
             else:
-                arguments = u'%s %s' % (merge_common, common.START_CUT_CMD)
+                arguments = u'%s %s' % (merge_common, common.END_CMD)
         elif self.configuration['append_list']:
             arguments = u'%s%s%s' % \
                 (merge_common, merge_metadata,

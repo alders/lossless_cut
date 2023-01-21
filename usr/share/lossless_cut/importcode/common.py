@@ -149,6 +149,8 @@ __version__ = '0.3.0'
 # 0.3.0 Upgrade:
 #       Convert from python2 to python3. Python2 is no supported anymore...
 #
+# 0.3.1 Added compareVersion method
+#
 
 __copyright__ = 'Copyright (c) 2012 R.D. Vaughan'
 __license__ = 'GPLV2'
@@ -160,6 +162,16 @@ def is_package():
     as part of a distributed package or from source.
     """
     return __file__.find('src') < 0
+
+# Method to compare two versions.
+# Return False if v2 is smaller,
+# True if v1 is smaller or equal
+def compareVersion(v1, v2):
+    for i, j in zip(map(int, v1.split(".")), map(int, v2.split("."))):
+        if i == j:
+            continue
+        return i > j
+    return len(v1.split(".")) >= len(v2.split("."))
 
 # System variables
 VERSION = __version__
@@ -205,6 +217,7 @@ CUTS_CMD = u'-o "%(workpath)s/%(recorded_name)s-%%04d.mkv" %(strip_args)s --spli
 CONCERT_CUTS_CMD = u'-o "%(segment_path)s/%(segment_filename)s.mkv" %(strip_args)s --split parts:%(split_list)s "%(sourcefile)s"'
 #
 START_CUT_CMD = u'%(strip_args)s --split parts:%(split_list)s "%(sourcefile)s"'
+END_CMD = u'%(strip_args)s "%(sourcefile)s"'
 CONVERT_CMD = u'%s -o "%%s" --title "%%s" --attachment-description "%%s" "%%s" &>>"%%s"'
 GEN_GET_CUTLIST_CMD = u'--chanid %(chanid)s --starttime "%(SQL_starttime)s"'
 #
@@ -231,7 +244,8 @@ SQL_GET_GENRE = u"SELECT genre FROM `programgenres` WHERE chanid=%(chanid)s AND 
 #
 ## SQL statements to collect information on the device that recorded the video
 SQL_GET_CARDID = u"SELECT `cardtype`, `defaultinput`, `videodevice`, `audiodevice`, `hostname` FROM `capturecard` WHERE `cardid` = %d"
-SQL_GET_CARDINFO = u"SELECT `cardid`, `displayname` FROM `cardinput` WHERE `sourceid` = %d"
+# The cardinput table is no longer used as of 0.28
+#SQL_GET_CARDINFO = u"SELECT `cardid`, `displayname` FROM `cardinput` WHERE `sourceid` = %d"
 SQL_GET_SOURCEID = u"SELECT `sourceid`  FROM `channel` WHERE `chanid` = %d"
 #
 ## SQL statements for collecting and inserting a Recording's data base records.

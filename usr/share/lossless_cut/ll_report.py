@@ -40,6 +40,7 @@ from datetime import datetime
 
 ## Mythtv loss less cut specific imports
 import importcode.common as common
+from importcode.common import compareVersion
 from importcode.utilities import create_cachedir, create_logger, \
         check_dependancies, set_language, get_config, \
         display_recorded_info, commandline_call, get_mediainfo, \
@@ -64,7 +65,7 @@ VERSION = ''
 for digit in etree.LIBXML_VERSION:
     VERSION += str(digit)+'.'
 VERSION = VERSION[:-1]
-if VERSION < '2.7.2':
+if common.compareVersion('2.7.2',VERSION):
     sys.stderr.write(u'''
 Error: The installed version of the "lxml" python library "libxml" version
        is too old. At least "libxml" version 2.7.2 must be installed.
