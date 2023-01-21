@@ -88,11 +88,11 @@ def send_osd (IP_LIST, TITLE, ORIGIN, DESCRIPTION, EXTRA, IMAGE, PROGRESS_TEXT, 
 def send_mythnotify (type, message, description):
 
     if type == "error":
-        send_osd(IP, "KOMUNIKAT SYSTEMOWY...",message , description, "", "images/mythnotify/error.png", "", "", timeout, "")
+        send_osd(IP, "SYSTEM MESSAGE...",message , description, "", "images/mythnotify/error.png", "", "", timeout, "")
     elif type == "warning":
-        send_osd(IP, "KOMUNIKAT SYSTEMOWY...",message , description, "", "images/mythnotify/warning.png", "", "", timeout, "")
+        send_osd(IP, "SYSTEM MESSAGE...",message , description, "", "images/mythnotify/warning.png", "", "", timeout, "")
     else:
-        send_osd(IP, "KOMUNIKAT SYSTEMOWY...",message , description, "", "images/mythnotify/check.png", "", "", timeout, "")
+        send_osd(IP, "SYSTEM MESSAGE...",message , description, "", "images/mythnotify/check.png", "", "", timeout, "")
 
 ## System imports
 import os
