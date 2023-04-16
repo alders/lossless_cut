@@ -21,7 +21,7 @@ Mem:            15Gi       1.3Gi        10Gi        74Mi       4.0Gi        13Gi
 Swap:          8.0Gi       384Mi       7.6Gi
 ```
 
-A contab to free your memory may be helpful:
+A crontab to free your memory may be helpful:
 ```bash
 $ cat freemem.sh
 sudo sh -c "sync; echo 3 > /proc/sys/vm/drop_caches"
