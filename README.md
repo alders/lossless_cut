@@ -2,7 +2,7 @@
 
 The Lossless Cut userjobs are used in conjunction with MythTV's commflag and editing UI to create loss less cut mkv video files. Lossless Cut supports multiple video, audio encoding types and subtitles formats. For full details see R.D. Vaughan: https://www.mythtv.org/wiki/Lossless_Cut
 
-Source is compatible with mythtv fixes/33 running on Fedora release 37.
+Source is compatible with mythtv fixes/34 running on Fedora release 37.
 
 It is recommended to force the use of mythccextractor by adding the "-X" as a command line parameter to a Lossless Cut user job e.g.:
 

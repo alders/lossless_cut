@@ -199,8 +199,8 @@ DATETIME_SQL_FORMAT = '%Y-%m-%d %H:%M:%S'
 #
 ## Version support is v30 and the current git master is the
 ## only pre-release that can be supported
-SUPPORTED_VERSIONS = 30
-UNSUPPORTED_PRE_VERSION = 34
+SUPPORTED_VERSIONS = 34
+UNSUPPORTED_PRE_VERSION = 30
 #
 ## plus or minus video track deplay in millseconds
 VIDEO_TRACK_DELAY = u' --sync 0:%d'
